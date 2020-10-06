@@ -1,0 +1,79 @@
+//AUTHOR: JEREMY HUNTON
+//COURSE: CPT187
+//PURPOSE: The purpose of WriteOrder is to write an order report of all the company orders for the end of day.
+//CREATE DATE: 9/29/2020
+package edu.cpt187.hunton.exercise6;
+
+import java.io.PrintWriter;
+
+import java.io.FileWriter;
+
+import java.io.IOException;
+
+public class WriteOrder 
+{
+	//declare class variables
+	private boolean fileFoundFlag = false;
+	private String masterFileName = "";
+	private int recordCount = 0;
+	
+	//declare class constructor passing the input file name to master file name
+	public WriteOrder(String borrowedFileName)
+	{
+		masterFileName = borrowedFileName;
+	}//end WriteOrder class constructor
+	
+	//start of SETTER methods
+	
+	//setWriteOrder writes an order line based upon the order information
+	public void setWriteOrder(int borrowedItemID, String borrowedItemName, double borrowedItemPrice, int borrowedItemQuantity, double borrowedOrderCost)
+	{
+		//try to open file and write order
+		try
+		{
+			//set to true to append and add more files to the record
+			PrintWriter filePW = new PrintWriter (new FileWriter(masterFileName, true));
+			
+			//printf structure for write
+			filePW.printf("%n%d\t%s\t%f\t%d\t%f", borrowedItemID, borrowedItemName, borrowedItemPrice, borrowedItemQuantity, borrowedOrderCost);
+			
+			//set flat to "Found"
+			fileFoundFlag = true;
+			
+			//close write/file
+			filePW.close();
+			
+			//increment record count to show a record is added
+			recordCount++;
+		}//END of try
+		
+		catch(IOException ex)
+		{
+			//set to not found
+			fileFoundFlag = false;
+		}//end catch
+	}//end setWriteOrder
+	
+	//end of SETTERS 
+	
+	//start of GETTERS 
+	
+	//getFileFoundFlag returns the file found flag
+	public boolean getFileFoundFlag()
+	{
+		return fileFoundFlag;
+	}//end getFileFoundFlag
+	
+	//getFileName returns the file master name
+	public String getFileName()
+	{
+		return masterFileName;
+	}//end getFileName 
+	
+	//getRecordCount returns the record count
+	public int getRecordCount()
+	{
+		return recordCount;
+	}//end getRecordCount
+
+}//end WriteOrder class
